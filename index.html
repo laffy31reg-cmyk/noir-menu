@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2A0D13">
+<title>Меню «Нуар»</title>
+<meta name="description" content="Меню лаунж-бара и кофейни «Нуар», Воронеж, проспект Революции, 6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Golos+Text:wght@400;500;600&display=swap">
+<script>
+/* ===== НАСТРОЙКА =====
+   Вставьте сюда ID вашей Google Таблицы — часть ссылки между /d/ и /edit.
+   Пример ссылки: https://docs.google.com/spreadsheets/d/1AbCdEf.../edit
+   Пока строка пустая, сайт показывает меню, встроенное в этот файл.
+   Таблица: «Меню Нуар — сайт», доступ «Все, у кого есть ссылка — Читатель». */
+var SHEET_ID = "1ndb0zktQdiYe2S7iuWSYMqLui09ONO8k1IrYyMG3P8o";
+/* Номера листов (gid) в таблице: Меню, Акции, Заведение. Не удаляйте эти листы. */
+var SHEET_GIDS = { menu: "0", promos: "434772869", venue: "632199091" };
+</script>
+<style>
+:root{
+  --bg:#2A0D13; --fg:#F3E9DC; --soft:#E3D3C0; --muted:#D4C1AE;
+  --brass:#D8AE6E; --rule:rgba(216,174,110,.55); --dot:#9C7B6E;
+  --display:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --body:"Golos Text", "Segoe UI", Roboto, Arial, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.wrap{max-width:620px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.mast{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding-bottom:18px}
+.logo{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(56px,16vw,84px);line-height:1;letter-spacing:.2em;padding-left:.2em;color:var(--brass)}
+.tag{margin:0;font-family:var(--display);font-style:italic;font-size:20px;color:var(--soft)}
+.dots{margin:8px 0 2px}
+.meta{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-wrap:balance}
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:4px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--rule)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:999px;background:transparent;font-size:13px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.chip:hover{color:var(--fg);border-color:var(--brass)}
+.promos{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.promo{border:1px solid var(--brass);padding:10px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center}
+.promo b{font-family:var(--display);font-style:italic;font-weight:600;font-size:20px;line-height:1.15;color:var(--brass)}
+.promo span{grid-column:1;font-size:13px;color:var(--soft)}
+.promo strong{grid-column:2;grid-row:1 / span 2;font-size:20px;font-weight:500;white-space:nowrap}
+.secs{display:flex;flex-direction:column;gap:30px;margin-top:26px}
+.sec{scroll-margin-top:calc(env(safe-area-inset-top,0px) + 70px)}
+.sec-h{display:flex;align-items:center;gap:12px;margin:0 0 6px;font-family:var(--display);font-style:italic;font-weight:600;font-size:27px;line-height:1.1;color:var(--brass);text-wrap:balance}
+.sec-h::before,.sec-h::after{content:"";flex:1;height:1px;background:var(--rule)}
+.sec-h span{max-width:80%;text-align:center}
+.sec-note{margin:0 0 8px;text-align:center;font-size:13px;color:var(--muted)}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.it{padding:4px 0}
+.row{display:flex;align-items:baseline;gap:8px}
+.nm{min-width:0}
+.lead{flex:1;min-width:14px;border-bottom:1px dotted var(--dot);transform:translateY(-4px)}
+.vol{font-size:12px;color:var(--muted);white-space:nowrap}
+.pr{font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pr.word{font-family:var(--display);font-style:italic;font-size:18px;color:var(--brass)}
+.ds{font-family:var(--display);font-style:italic;font-size:16px;line-height:1.2;color:var(--muted);margin-top:1px}
+.plain .row{display:block}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:12px;color:var(--muted)}
+.foot p{margin:0}
+.slogan{font-family:var(--display);font-style:italic;font-size:19px;color:var(--brass)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script type="application/json" id="fallback">{"venue": {"name": "НУАР", "tagline": "лаунж-бар и кофейня", "hours": "", "address": "Воронеж, проспект Революции, 6", "slogan": "Вкус · Настроение · Атмосфера"}, "sections": [{"id": "hot", "title": "Горячий кофе", "note": "", "items": [{"n": "Эспрессо", "d": "", "v": "40 мл", "p": "150"}, {"n": "Американо", "d": "", "v": "200 мл", "p": "190"}, {"n": "Капучино", "d": "", "v": "250 мл", "p": "290"}, {"n": "Капучино гранд", "d": "", "v": "350 мл", "p": "350"}, {"n": "Латте", "d": "", "v": "250 мл", "p": "290"}, {"n": "Флэт уайт", "d": "", "v": "200 мл", "p": "290"}, {"n": "Раф классический", "d": "", "v": "300 мл", "p": "350"}, {"n": "Бамбл горячий", "d": "сок на выбор", "v": "250 мл", "p": "300"}]}, {"id": "cold", "title": "Холодный кофе", "note": "", "items": [{"n": "Айс бамбл", "d": "сок на выбор", "v": "350 мл", "p": "350"}, {"n": "Айс латте", "d": "", "v": "350 мл", "p": "350"}, {"n": "Эспрессо тоник", "d": "", "v": "350 мл", "p": "350"}]}, {"id": "author", "title": "Авторский кофе", "note": "", "items": [{"n": "Латте лаванда-кокос", "d": "", "v": "250 мл", "p": "290"}, {"n": "Раф малина-фисташка", "d": "", "v": "300 мл", "p": "350"}]}, {"id": "extra", "title": "Добавки", "note": "", "items": [{"n": "Сироп на выбор", "d": "", "v": "", "p": "бесплатно"}, {"n": "Альтернативное молоко", "d": "", "v": "", "p": "90"}, {"n": "Доп. эспрессо", "d": "", "v": "", "p": "60"}]}, {"id": "notcoffee", "title": "Не кофе", "note": "", "items": [{"n": "Матча латте", "d": "", "v": "250 мл", "p": "300"}, {"n": "Какао", "d": "", "v": "250 мл", "p": "210"}, {"n": "Горячий шоколад", "d": "", "v": "200 мл", "p": "450"}]}, {"id": "tea", "title": "Чай классический", "note": "чайник 800 мл — 350 ₽", "items": [{"n": "Ассам", "d": "", "v": "", "p": ""}, {"n": "Сенча", "d": "", "v": "", "p": ""}, {"n": "Эрл грей", "d": "", "v": "", "p": ""}, {"n": "Травяной", "d": "", "v": "", "p": ""}, {"n": "Молочный улун", "d": "", "v": "", "p": ""}, {"n": "Пуэр", "d": "", "v": "", "p": ""}, {"n": "Да хун пао", "d": "", "v": "", "p": ""}, {"n": "Жасминовый", "d": "", "v": "", "p": ""}, {"n": "Ройбуш", "d": "", "v": "", "p": ""}, {"n": "Гречишный", "d": "", "v": "", "p": ""}]}, {"id": "teaauthor", "title": "Авторские чаи", "note": "чайник 800 мл — 600 ₽", "items": [{"n": "Облепиха-мята-матча", "d": "", "v": "", "p": ""}, {"n": "Белый персик-жасмин", "d": "", "v": "", "p": ""}, {"n": "Клубника-мята", "d": "", "v": "", "p": ""}, {"n": "Самаркандский", "d": "", "v": "", "p": ""}, {"n": "Апельсин-чёрная смородина", "d": "", "v": "", "p": ""}, {"n": "Пряная вишня", "d": "", "v": "", "p": ""}, {"n": "Имбирный", "d": "", "v": "", "p": ""}, {"n": "Смородина-розмарин", "d": "", "v": "", "p": ""}]}, {"id": "lemonade", "title": "Авторские лимонады", "note": "350 мл / 1 л", "items": [{"n": "Тропическая жвачка", "d": "", "v": "", "p": "350 / 700"}, {"n": "Голубика-фейхоа", "d": "", "v": "", "p": "350 / 700"}, {"n": "Киви-маракуйя", "d": "", "v": "", "p": "350 / 700"}, {"n": "Мохито классический", "d": "", "v": "", "p": "350 / 700"}, {"n": "Мохито клубничный", "d": "", "v": "", "p": "350 / 700"}, {"n": "Ягодный с мятой", "d": "", "v": "", "p": "350 / 700"}]}, {"id": "drinks", "title": "Фреши и напитки", "note": "", "items": [{"n": "Фреш апельсиновый", "d": "", "v": "250 мл", "p": "440"}, {"n": "Фреш грейпфрутовый", "d": "", "v": "250 мл", "p": "470"}, {"n": "Rich сок в ассортименте", "d": "", "v": "200 мл", "p": "250"}, {"n": "Rich tonic в ассортименте", "d": "", "v": "330 мл", "p": "250"}, {"n": "Добрый кола", "d": "", "v": "250 мл", "p": "250"}, {"n": "Добрый кола без сахара", "d": "", "v": "250 мл", "p": "250"}, {"n": "Бонаква без газа", "d": "", "v": "330 мл", "p": "250"}, {"n": "Бонаква с газом", "d": "", "v": "330 мл", "p": "250"}, {"n": "Адреналин", "d": "", "v": "250 мл", "p": "250"}, {"n": "Адреналин без сахара", "d": "", "v": "250 мл", "p": "250"}]}, {"id": "desserts", "title": "Десерты с собой", "note": "", "items": [{"n": "Наполеон", "d": "", "v": "", "p": "350"}, {"n": "Медовик", "d": "", "v": "", "p": "300"}, {"n": "Тирамису", "d": "", "v": "", "p": "380"}]}, {"id": "croissants", "title": "Круассаны", "note": "", "items": [{"n": "С ветчиной и сыром", "d": "", "v": "", "p": "340"}, {"n": "С лососем и сливочным сыром", "d": "", "v": "", "p": "450"}]}, {"id": "snacks", "title": "Снеки", "note": "", "items": [{"n": "Начос с сальсой и сырным соусом", "d": "", "v": "180 г", "p": "420"}, {"n": "Оливки и вяленые томаты", "d": "", "v": "130 г", "p": "370"}, {"n": "Орехи микс", "d": "", "v": "60 г", "p": "290"}, {"n": "Чипсы картофельные", "d": "", "v": "60 г", "p": "200"}, {"n": "Гренки с чесноком", "d": "", "v": "100 г", "p": "200"}]}, {"id": "steam", "title": "Паровые коктейли", "note": "", "items": [{"n": "Лёгкий", "d": "", "v": "", "p": "1100"}, {"n": "Средний", "d": "", "v": "", "p": "1200"}, {"n": "Крепкий", "d": "", "v": "", "p": "1400"}, {"n": "Фруктовая чаша — апельсин", "d": "доплата к коктейлю", "v": "", "p": "200"}, {"n": "Фруктовая чаша — грейпфрут", "d": "доплата к коктейлю", "v": "", "p": "300"}]}, {"id": "beer", "title": "Пиво и сидр", "note": "", "items": [{"n": "Пиво в ассортименте", "d": "", "v": "500 мл", "p": "400 / 450"}, {"n": "Сидр", "d": "", "v": "330 мл", "p": "350"}]}], "promos": [{"title": "Завтрак до 12:00", "text": "капучино и круассан с ветчиной и сыром", "value": "490 ₽"}, {"title": "Кофе и десерт", "text": "любой кофе с любым десертом днём", "value": "−15%"}, {"title": "Счастливые часы", "text": "паровые коктейли по будням 12:00–16:00", "value": "−20%"}]}</script>
+<script>
+(function () {
+  "use strict";
+  var app = document.getElementById("app");
+  var DOTS = '<svg class="dots" width="120" height="14" viewBox="0 0 120 16" aria-hidden="true"><circle cx="60" cy="8" r="3" fill="#D8AE6E"/><circle cx="44" cy="8" r="1.6" fill="#D8AE6E"/><circle cx="76" cy="8" r="1.6" fill="#D8AE6E"/><circle cx="30" cy="8" r="1" fill="#D8AE6E"/><circle cx="90" cy="8" r="1" fill="#D8AE6E"/></svg>';
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function t(s) { return String(s == null ? "" : s).trim(); }
+  function yes(s) { return /^(да|x|х|\+|1|yes|true)$/i.test(t(s)); }
+  function isNum(p) { return /^\+?\d[\d\s]*(\s*\/\s*\d[\d\s]*)?$/.test(p); }
+
+  function render(d) {
+    var v = d.venue || {};
+    var secs = (d.sections || []).map(function (s) {
+      return { id: s.id, title: s.title, note: s.note, items: (s.items || []).filter(function (i) { return !i.hidden && t(i.n); }) };
+    }).filter(function (s) { return s.items.length; });
+    var meta = [t(v.hours), t(v.address)].filter(Boolean).map(esc).join(" · ");
+    var h = '<header class="mast"><h1 class="logo">' + esc(v.name || "НУАР") + "</h1>" +
+      (t(v.tagline) ? '<p class="tag">' + esc(v.tagline) + "</p>" : "") + DOTS +
+      (meta ? '<p class="meta">' + meta + "</p>" : "") + "</header>";
+    h += '<div class="sticky"><nav class="chips" aria-label="Разделы">' + secs.map(function (s) {
+      return '<button type="button" class="chip" data-go="' + esc(s.id) + '">' + esc(s.title) + "</button>";
+    }).join("") + "</nav></div>";
+    var pr = (d.promos || []).filter(function (p) { return !p.hidden && t(p.title); });
+    if (pr.length) h += '<section class="promos" aria-label="Акции">' + pr.map(function (p) {
+      return '<div class="promo"><b>' + esc(p.title) + "</b>" + (t(p.text) ? "<span>" + esc(p.text) + "</span>" : "") + (t(p.value) ? "<strong>" + esc(p.value) + "</strong>" : "") + "</div>";
+    }).join("") + "</section>";
+    h += '<main class="secs">' + secs.map(function (s) {
+      return '<section class="sec" id="sec-' + esc(s.id) + '"><h2 class="sec-h"><span>' + esc(s.title) + "</span></h2>" +
+        (t(s.note) ? '<p class="sec-note">' + esc(s.note) + "</p>" : "") +
+        '<ul class="items">' + s.items.map(function (it) {
+          var n = t(it.n), ds = t(it.d), vol = t(it.v), p = t(it.p), plain = !vol && !p;
+          var r = '<li class="it' + (plain ? " plain" : "") + '"><div class="row"><span class="nm">' + esc(n) + "</span>";
+          if (!plain) {
+            r += '<span class="lead" aria-hidden="true"></span>';
+            if (vol) r += '<span class="vol">' + esc(vol) + "</span>";
+            if (p) r += isNum(p) ? '<span class="pr">' + esc(p) + " ₽</span>" : '<span class="pr word">' + esc(p) + "</span>";
+          }
+          return r + "</div>" + (ds ? '<div class="ds">' + esc(ds) + "</div>" : "") + "</li>";
+        }).join("") + "</ul></section>";
+    }).join("") + "</main>";
+    h += '<footer class="foot">' + (t(v.slogan) ? '<p class="slogan">' + esc(v.slogan) + "</p>" : "") +
+      "<p>Цены указаны в рублях</p><p>Чрезмерное употребление алкоголя вредит вашему здоровью</p></footer>";
+    app.innerHTML = h;
+  }
+
+  app.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]");
+    if (!b) return;
+    var el = document.getElementById("sec-" + b.getAttribute("data-go"));
+    if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  });
+
+  /* ---- Google Таблица ---- */
+  function parseCSV(text) {
+    var rows = [], row = [], cur = "", q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += c;
+      } else if (c === '"') q = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(cur); rows.push(row); row = []; cur = "";
+      } else cur += c;
+    }
+    if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+  function sheet(gid) {
+    var url = "https://docs.google.com/spreadsheets/d/" + encodeURIComponent(SHEET_ID) +
+      "/export?format=csv&gid=" + encodeURIComponent(gid) + "&t=" + Math.floor(Date.now() / 60000);
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    }).then(function (txt) { return parseCSV(txt).slice(1); });
+  }
+  function fromSheets(menu, promos, venue, fb) {
+    var sections = [], byTitle = {};
+    menu.forEach(function (r, i) {
+      var title = t(r[0]), name = t(r[2]);
+      if (!title) return;
+      var s = byTitle[title];
+      if (!s) { s = { id: "s" + sections.length, title: title, note: "", items: [] }; byTitle[title] = s; sections.push(s); }
+      if (!s.note && t(r[1])) s.note = t(r[1]);
+      if (name) s.items.push({ n: name, d: t(r[3]), v: t(r[4]), p: t(r[5]), hidden: yes(r[6]) });
+    });
+    var keys = { "название": "name", "подзаголовок": "tagline", "часы работы": "hours", "адрес": "address", "слоган": "slogan" };
+    var v = {};
+    Object.keys(fb.venue || {}).forEach(function (k) { v[k] = fb.venue[k]; });
+    (venue || []).forEach(function (r) { var k = keys[t(r[0]).toLowerCase()]; if (k) v[k] = t(r[1]); });
+    return {
+      venue: v,
+      sections: sections,
+      promos: (promos || []).filter(function (r) { return t(r[0]); }).map(function (r) { return { title: t(r[0]), text: t(r[1]), value: t(r[2]), hidden: yes(r[3]) }; })
+    };
+  }
+
+  var fb = JSON.parse(document.getElementById("fallback").textContent);
+  var CACHE = "noir-menu-cache";
+  var start = fb;
+  try { var c = localStorage.getItem(CACHE); if (c && SHEET_ID) start = JSON.parse(c); } catch (e) {}
+  render(start);
+  if (SHEET_ID) {
+    Promise.all([sheet(SHEET_GIDS.menu), sheet(SHEET_GIDS.promos).catch(function () { return []; }), sheet(SHEET_GIDS.venue).catch(function () { return []; })])
+      .then(function (r) {
+        var d = fromSheets(r[0], r[1], r[2], fb);
+        if (!d.sections.length) return;
+        render(d);
+        try { localStorage.setItem(CACHE, JSON.stringify(d)); } catch (e) {}
+      })
+      .catch(function () { /* таблица недоступна — остаётся меню из файла или последней загрузки */ });
+  }
+})();
+</script>
+</body>
+</html>
